@@ -12,12 +12,14 @@ import UIKit
     optional func filtersViewControllerDelegate (filtersViewController : FiltersViewController, didUpdateFilters filters: [String:AnyObject])
 }
 
-class FiltersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate {
+class FiltersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate, DealsTableViewCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
     var categories : [[String:String]]!
     var switchStates = [Int:Bool]()
+    var dealsState = false;
+    
     weak var delegate : FiltersViewControllerDelegate?
     
     override func viewDidLoad() {
@@ -29,30 +31,71 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.dataSource = self;
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (categories != nil) {
-            return categories.count
-        } else {
-            return 0;
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Deals"
+        case 1:
+            return "Categories"
+        default:
+            return ""
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SwitchTableViewCell", forIndexPath: indexPath) as! SwitchTableViewCell
-        cell.switchLabel.text = categories[indexPath.row]["name"]
-        cell.delegate = self
-        if switchStates[indexPath.row] != nil {
-            cell.onSwitch.on = switchStates[indexPath.row]!
-        } else {
-            cell.onSwitch.on = false
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 1;
+        case 1:
+            if (categories != nil) {
+                return categories.count
+            } else {
+                return 0;
+            }
+        default:
+            return 0;
         }
-        return cell;
+        
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        switch indexPath.section {
+        case 0:
+            let cell = tableView.dequeueReusableCellWithIdentifier("DealsTableViewCell", forIndexPath: indexPath) as! DealsTableViewCell
+            cell.dealsLabel.text = "Deals"
+            cell.delegate = self
+            cell.dealsSwitch.on = self.dealsState
+            return cell
+        case 1:
+            let cell = tableView.dequeueReusableCellWithIdentifier("SwitchTableViewCell", forIndexPath: indexPath) as! SwitchTableViewCell
+            cell.switchLabel.text = categories[indexPath.row]["name"]
+            cell.delegate = self
+            if switchStates[indexPath.row] != nil {
+                cell.onSwitch.on = switchStates[indexPath.row]!
+            } else {
+                cell.onSwitch.on = false
+            }
+            return cell;
+        default:
+            let cell = UITableViewCell()
+            return cell;
+        }
+        
     }
     
     func switchTableViewCell(switchTableViewCell: SwitchTableViewCell, didChangeValue value: Bool) {
         let indexPath = tableView.indexPathForCell(switchTableViewCell);
         print ("filter view controller - switch event")
         switchStates[indexPath!.row] = value
+    }
+    
+    func dealsTableViewCell(dealsTableViewCell: DealsTableViewCell, didChangeValue value: Bool) {
+        print("filter view controller - deals event")
+        dealsState = value
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,6 +116,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         if (selectedCategories.count > 0) {
             filters["categories"] = selectedCategories
         }
+        filters["deals"] = dealsState
         delegate?.filtersViewControllerDelegate!(self, didUpdateFilters: filters)
     }
     
@@ -91,6 +135,13 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     */
     
     func yelpCategories() -> [[String:String]] {
+        return [["name" : "Afghan", "code" : "afghani"],
+            ["name" : "African", "code" : "african"]]
+    }
+
+
+    
+    func yelpCategoriesAll() -> [[String:String]] {
         return [["name" : "Afghan", "code" : "afghani"],
             ["name" : "African", "code" : "african"],
             ["name" : "Senegalese", "code" : "senegalese"],

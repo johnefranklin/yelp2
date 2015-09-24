@@ -155,8 +155,40 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SwitchTableViewCell" rowHeight="91" id="ieL-be-hbD" customClass="SwitchTableViewCell" customModule="Yelp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="320" height="91"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DealsTableViewCell" rowHeight="65" id="T9F-yo-a2v" customClass="DealsTableViewCell" customModule="Yelp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="92" width="320" height="65"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="T9F-yo-a2v" id="BQk-C6-QKc">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="64.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hsQ-Ng-t0T">
+                                                    <rect key="frame" x="8" y="22" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4aj-4w-fNA">
+                                                    <rect key="frame" x="263" y="17" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="onValueChanged:" destination="T9F-yo-a2v" eventType="valueChanged" id="xbe-aX-oRn"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="hsQ-Ng-t0T" firstAttribute="centerY" secondItem="BQk-C6-QKc" secondAttribute="centerY" id="4JU-bk-WsL"/>
+                                                <constraint firstItem="4aj-4w-fNA" firstAttribute="centerY" secondItem="BQk-C6-QKc" secondAttribute="centerY" id="fIJ-yF-cu1"/>
+                                                <constraint firstItem="hsQ-Ng-t0T" firstAttribute="leading" secondItem="BQk-C6-QKc" secondAttribute="leading" constant="8" id="hFY-UR-zic"/>
+                                                <constraint firstAttribute="trailing" secondItem="4aj-4w-fNA" secondAttribute="trailing" constant="8" id="u1X-R6-uLu"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="dealsLabel" destination="hsQ-Ng-t0T" id="UNK-30-x3w"/>
+                                            <outlet property="dealsSwitch" destination="4aj-4w-fNA" id="d5Z-77-4uU"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SwitchTableViewCell" rowHeight="91" id="ieL-be-hbD" userLabel="CategoriesSwitchTableViewCell" customClass="SwitchTableViewCell" customModule="Yelp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="157" width="320" height="91"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ieL-be-hbD" id="lBQ-XM-1tF">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="90.5"/>
